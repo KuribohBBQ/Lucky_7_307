@@ -61,6 +61,7 @@ function Login(props) {
 	}
 
 	function submitForm() {
+		console.log("this is creds in submit form:", creds);
 		props
 			.handleSubmit(creds)
 			.then(() => {
