@@ -3,10 +3,10 @@ function TableHeader() {
 	return (
 		<thead>
 			<tr>
-				<th>Task</th>
-				<th>Time-to-Complete</th>
-				<th>Start</th>
-				<th>Due</th>
+				<th style={{ color: "white" }}>Task</th>
+				<th style={{ color: "white" }}>Time-to-Complete</th>
+				<th style={{ color: "white" }}>Start</th>
+				<th style={{ color: "white" }}>Due</th>
 			</tr>
 		</thead>
 	);

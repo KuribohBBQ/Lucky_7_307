@@ -11,7 +11,8 @@ function Login(props) {
 
 	return (
 		<form>
-			<label htmlFor="username">UserName</label>
+			<label htmlFor="username"
+			style={{ color: "white"}}>UserName</label>
 			<input
 				type="text"
 				name="username"
@@ -19,7 +20,8 @@ function Login(props) {
 				value={creds.username}
 				onChange={handleChange}
 			/>
-			<label htmlFor="password">Password</label>
+			<label htmlFor="password"
+			style={{ color: "white"}}>Password</label>
 			<input
 				type="password"
 				name="password"
