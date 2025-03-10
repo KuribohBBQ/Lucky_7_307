@@ -87,9 +87,27 @@ app.post("/schedules". (req, res) => {
 app.get("/tasks", authenticateUser, (req, res) => {
 	const username = req.username;
 	console.log("Fetching tasks for user:", username);
-	taskService
-	.getTasks(username)
-	.then((tasks) => {
-		const tasksList = tasks;
+	Promise.all([
+		taskService.getTasks,
+		scheduleService.getSchedule
+	])
+	.then(([tasks, schedule]) => {
+		const taskList = tasks;
+		const sortedTasks = listSort(tasks);  
+
+		const schedule_list = schedule;
+		
+		const groupedTasks = groupTasksByDate(sortedTasks); //creates available hours
+
+		const finalizedSchedule = assembleSchedule(schedule_list, groupedTasks)
+
+
+		res.send(finalizedSchedule);
+
+		
+	})
+	.catch((error) => {
+		console.error("Error fetching tasks or schedule:", error);
+		res.status(500).send(error);
 	})
 })

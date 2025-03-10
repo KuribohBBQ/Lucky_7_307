@@ -128,3 +128,26 @@ let tasks = [
 ];
 let result = scheduleTasks(tasks, availableGaps);
 console.log(result)
+
+
+
+function groupTasksByDate(sortedTasks) {
+    const groupedTasks = {};
+
+    sortedTasks.forEach(task => {
+        const { date, time } = task;
+        
+        // If this date is not in the groupedTasks object, initialize it
+        if (!groupedTasks[date]) {
+            groupedTasks[date] = { date, times: [] };
+        }
+
+        // Append time to the corresponding date
+        groupedTasks[date].times.push(time);
+    });
+
+    return Object.entries(groupedTasks).map(([date, times]) => ({
+        date,
+        gaps: findGaps(times)  // Call findGaps on the list of times for each date
+    }));
+}
