@@ -80,3 +80,16 @@ app.post("/schedules". (req, res) => {
 		.catch((error) => res.status(500).send(error))
 
 }); 
+
+
+//retrieve the entries for each day the user has already
+//on the schedule
+app.get("/tasks", authenticateUser, (req, res) => {
+	const username = req.username;
+	console.log("Fetching tasks for user:", username);
+	taskService
+	.getTasks(username)
+	.then((tasks) => {
+		const tasksList = tasks;
+	})
+})
