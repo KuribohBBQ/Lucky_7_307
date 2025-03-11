@@ -30,91 +30,119 @@ function TaskPage() {
     ); 
   } 
   export default TaskPage;*/
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TaskTable from "./TaskTable";
-import Form from "./Form";
+import { ScheduleForm } from "./Form";
+
+const INVALID_TOKEN = "INVALID_TOKEN";
 
 function TaskPage({ goToToDoPage, token  }) {
 	// this is the token that we use to authenticate. Use to access mongo.
 	console.log("this is the token:", token);
 
-	const [characters, setCharacters] = useState([]);
-	
-  //ask about which one to use
-  function removeOneCharacter(index) {
-		const updated = characters.filter((character, i) => {
+	const [schedule, setSchedule] = useState([]);
+
+	function addAuthHeader(otherHeaders = {}) {
+		console.log("addAuthHeader is called. Current token:", token);
+		if (token === INVALID_TOKEN) {
+			return otherHeaders;
+		} else {
+			return {
+				...otherHeaders,
+				Authorization: `Bearer ${token}`
+			};
+		}
+	}
+
+	function removeOneEntry(index) {
+		const scheduleToRemove = schedule[index];
+		const updated = schedule.filter((scheduleToRemove, i) => {
 			return i !== index;
 		});
-    const id = characters[index]._id
-    const promise = fetch("http://localhost:8000/tasks" + id {
-      method: "DELETE"
-    })
-    return promise.then (
-      (res) => {
-        if (res.status == 204)
-          setCharacters(updated);
-      }
-    )
+		deleteSchedule(scheduleToRemove)
+			.then((res) => {
+				if (res.status === 204) setSchedule(updated);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
+
 // ask about which one to use. 
-  function deleteTask(task) {
+  function deleteSchedule(scheduleToDelete) {
 		const promise = fetch(
-			"Http://localhost:8000/tasks/" + task._id,
+			"Http://localhost:8000/schedules/" + scheduleToDelete._id,
 			{
 				method: "DELETE",
 				headers: addAuthHeader({
 					"Content-Type": "application/json"
 				}),
-				body: JSON.stringify(task)
+				body: JSON.stringify(scheduleToDelete)
 			}
 		);
 
 		return promise;
 	}
-
-  //function updateList is suppsoed to take in task and add it to table
-  function updateList(person) {
-    postScheduleEvent(event)
-      .then((v) => setCharacters([...characters, v]))
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-  
   
   //supposed to handle the fetch part of the code
-	function fetchTasks() {
-		const promise = fetch("http://localhost:8000/tasks", {
+	function fetchSchedule() {
+		const promise = fetch("http://localhost:8000/schedules", {
 			headers: addAuthHeader()
 		});
 
 		return promise;
 	}
 
-  function postScheduleEvent(task) {
-		const promise = fetch("Http://localhost:8000/tasks", {
+  function postScheduleEvent(schedule) {
+		const promise = fetch("Http://localhost:8000/schedules", {
 			method: "POST",
 			headers: addAuthHeader({
 				"Content-Type": "application/json"
 			}),
-			body: JSON.stringify(task)
+			body: JSON.stringify(schedule)
 		});
 
 		return promise;
 	}
 
+	function updateSchedule(scheduleToAdd) {
+		console.log("this is schedule in update", scheduleToAdd);
+		postScheduleEvent(scheduleToAdd)
+			.then((res) => {
+				if (res.status === 201) return res.json();
+			})
+			.then((json) => {
+				setSchedule([...schedule, json]);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
 
-
-
+	useEffect(() => {
+		fetchSchedule()
+			.then((res) =>
+				res.status === 200 ? res.json() : undefined
+			)
+			.then((json) => {
+				if (json) {
+					console.log("this is jason:", json);
+					setSchedule(json["schedule_list"]);
+					console.log("this is schedule", schedule);
+				} else {
+					setSchedule([]);
+				}
+			});
+	}, [token]);
 
 	return (
 		<div className="container">
 			<h1 style={{color: "white"}}>Please Enter Tasks</h1>
 			<TaskTable
-				characterData={characters}
-				removeCharacter={removeOneCharacter}
+				scheduleData={schedule}
+				removeEntry={removeOneEntry}
 			/>
-			<Form handleSubmit={updateList} />
+			<ScheduleForm handleSubmit={updateSchedule} />
 			<ul>
 				<li
 					onClick={goToToDoPage} // Navigate to task page

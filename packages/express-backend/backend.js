@@ -71,16 +71,35 @@ app.post("/users", (req, res) => {
 });
 
 //adding schedule plans to mongo. 
-app.post("/schedules". (req, res) => {
+app.post("/schedules", authenticateUser, (req, res) => {
 	const scheduleToAdd = req.body;
 	const username = req.username;
 	scheduleService
 		.addSchedule(scheduleToAdd, username)
-		.then((addedSchedule) => res.status(201).send(addedSchedule)
-		.catch((error) => res.status(500).send(error))
-
+		.then((addedSchedule) => res.status(201).send(addedSchedule))
+		.catch((error) => res.status(500).send(error));
 }); 
 
+//app to list all schedules
+app.get("/schedules", authenticateUser, (req, res) => {
+	const username = req.username;
+	console.log("the current username is: ", username);
+	scheduleService
+		.getSchedule(username)
+		.then((schedule) => res.send({ schedule_list: schedule }))
+		.catch((error) => res.status(500).send(error));
+});
+
+// delete schedules
+app.delete("/schedules/:id", authenticateUser, (req, res) => {
+	const id = req.params["id"];
+	scheduleService
+		.deleteScheduleById(id)
+		.then((deletedSchedule) => {
+			res.status(204).send(deletedSchedule);
+		})
+		.catch((error) => res.status(500).send(error));
+});
 
 //retrieve the entries for each day the user has already
 //on the schedule
