@@ -113,8 +113,8 @@ app.post("/tasks/auto", authenticateUser, (req, res) => {
 		scheduleService.getSchedule(username),
 	])
 	.then(([tasks, schedule]) => {
-		const sortedTasks = listSort(tasks);  
-
+		//const sortedTasks = listSort(tasks);  
+        const sortedTasks = [...tasks].sort((a, b) => new Date(a.date) - new Date(b.date));
 		const schedule_list = schedule;
 		
 		const groupedTasks = times.groupTasksByDate(sortedTasks); //creates available hours

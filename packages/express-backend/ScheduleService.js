@@ -1041,12 +1041,7 @@ function scheduleTasks(tasks, availableTimes) {
 
 
 //let gaps = ['08:00-13:00', '14:00-18:00'];
-let gaps = {
-  '02/04/2025': [ '08:00-13:00', '14:00-18:00' ],
-  '02/05/2025': [ '09:00-12:00' ],
-  '02/06/2025': [ '09:00-12:00'],
-  '02/08/2025': ['09:00-12:00']
-}
+
 
 function processData(data, gaps) {
     let readyList = [];
