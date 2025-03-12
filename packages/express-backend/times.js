@@ -1,4 +1,4 @@
-function timeRange(range) {
+/*function timeRange(range) {
     const [start, end] = range.split('-').map(time => time.trim());
     return { start, end };
 }
@@ -151,3 +151,193 @@ function groupTasksByDate(sortedTasks) {
         gaps: findGaps(times)  // Call findGaps on the list of times for each date
     }));
 }
+
+class Task {
+    constructor(time, task, date, username) {
+        this.time = time;
+        this.task = task;
+        this.date = date; // Format: "MM/DD/YYYY"
+        this.username = username;
+    }
+}
+
+function groupTasksByDate(sortedTasks) {
+    const groupedTasks = {};
+
+    sortedTasks.forEach(task => {
+        const { date, time } = task;
+        
+        if (!groupedTasks[date]) {
+            groupedTasks[date] = [];
+        }
+
+        groupedTasks[date].push(time);
+    });
+
+    return groupedTasks;
+}
+
+function computeDuration(range) {
+    const [start, end] = range.split('-').map(time => time.trim());
+    
+    const parseTime = (time) => {
+        let [hours, minutes] = time.split(':').map(Number);
+        return hours + (minutes / 60);
+    };
+    
+    return parseTime(end) - parseTime(start);
+}
+
+function computeTotalDurations(groupedTasks) {
+    const result = {};
+
+    for (const [date, times] of Object.entries(groupedTasks)) {
+        result[date] = times.reduce((sum, time) => sum + computeDuration(time), 0);
+    }
+
+    return result;
+}
+
+function findGaps(ranges) {
+    const parseTime = (time) => {
+        let [hours, minutes] = time.split(':').map(Number);
+        return hours + (minutes / 60);
+    };
+
+    let parsedRanges = ranges.map(range => {
+        let [start, end] = range.split('-').map(time => time.trim());
+        return { start: parseTime(start), end: parseTime(end) };
+    });
+
+    parsedRanges.sort((a, b) => a.start - b.start);
+
+    let gaps = [];
+    for (let i = 0; i < parsedRanges.length - 1; i++) {
+        if (parsedRanges[i].end < parsedRanges[i + 1].start) {
+            gaps.push({
+                start: parsedRanges[i].end,
+                end: parsedRanges[i + 1].start
+            });
+        }
+    }
+
+    let gapRanges = gaps.map(gap => 
+        `${Math.floor(gap.start)}:${String(Math.round((gap.start % 1) * 60)).padStart(2, '0')}-` +
+        `${Math.floor(gap.end)}:${String(Math.round((gap.end % 1) * 60)).padStart(2, '0')}`
+    );
+
+    return gapRanges;
+}
+
+function computeGaps(groupedTasks) {
+    const result = {};
+
+    for (const [date, times] of Object.entries(groupedTasks)) {
+        result[date] = findGaps(times);
+    }
+
+    return result;
+}
+
+let tasks = [
+    new Task("10:00-11:00", "Meeting", "02/01/2025", "Alice"),
+    new Task("12:30-13:30", "Lunch", "02/01/2025", "Bob"),
+    new Task("14:00-15:00", "Presentation", "02/02/2025", "Charlie"),
+    new Task("09:00-10:00", "Coding", "02/01/2025", "David"),
+    new Task("15:30-16:30", "Gym", "02/02/2025", "Eve"),
+    new Task("15:00-16:00", "Drive Home", "02/01/2025", "Jackson"),
+    //new Task("11:00-12:00", "Team Sync", "02/01/2025", "Alice"),
+];
+
+let groupedResult = groupTasksByDate(tasks);
+let durationsResult = computeTotalDurations(groupedResult);
+let gapsResult = computeGaps(groupedResult);
+
+console.log("Total durations:", durationsResult);
+console.log("Time gaps:", gapsResult);*/
+
+function groupTasksByDate(sortedTasks) {
+    const groupedTasks = {};
+
+    sortedTasks.forEach(task => {
+        const { date, time } = task;
+        
+        if (!groupedTasks[date]) {
+            groupedTasks[date] = [];
+        }
+
+        groupedTasks[date].push(time);
+    });
+
+    return groupedTasks;
+}
+
+function computeDuration(range) {
+    const [start, end] = range.split('-').map(time => time.trim());
+    
+    const parseTime = (time) => {
+        let [hours, minutes] = time.split(':').map(Number);
+        return hours + (minutes / 60);
+    };
+    
+    return parseTime(end) - parseTime(start);
+}
+
+function computeTotalDurations(groupedTasks) {
+    const result = {};
+
+    for (const [date, times] of Object.entries(groupedTasks)) {
+        result[date] = times.reduce((sum, time) => sum + computeDuration(time), 0);
+    }
+
+    return result;
+}
+
+function findGaps(ranges) {
+    const parseTime = (time) => {
+        let [hours, minutes] = time.split(':').map(Number);
+        return hours + (minutes / 60);
+    };
+
+    let parsedRanges = ranges.map(range => {
+        let [start, end] = range.split('-').map(time => time.trim());
+        return { start: parseTime(start), end: parseTime(end) };
+    });
+
+    parsedRanges.sort((a, b) => a.start - b.start);
+
+    let gaps = [];
+    for (let i = 0; i < parsedRanges.length - 1; i++) {
+        if (parsedRanges[i].end < parsedRanges[i + 1].start) {
+            gaps.push({
+                start: parsedRanges[i].end,
+                end: parsedRanges[i + 1].start
+            });
+        }
+    }
+
+    let gapRanges = gaps.map(gap => 
+        `${Math.floor(gap.start)}:${String(Math.round((gap.start % 1) * 60)).padStart(2, '0')}-` +
+        `${Math.floor(gap.end)}:${String(Math.round((gap.end % 1) * 60)).padStart(2, '0')}`
+    );
+
+    return gapRanges;
+}
+
+function computeGaps(groupedTasks) {
+    const result = {};
+
+    for (const [date, times] of Object.entries(groupedTasks)) {
+        result[date] = findGaps(times);
+    }
+
+    return result;
+}
+
+export default {
+    groupTasksByDate,
+    computeDuration,
+    computeTotalDurations,
+    findGaps,
+    computeGaps
+};

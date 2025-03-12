@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import taskService from "./services/task-service.js";
 import scheduleService from "./services/schedule-service.js";
+import assembleSchedule from "./ScheduleService.js";
+import times from "./times.js";
 dotenv.config();
 
 const { MONGO_CONNECTION_STRING } = process.env;
@@ -107,8 +109,8 @@ app.get("/tasks", authenticateUser, (req, res) => {
 	const username = req.username;
 	console.log("Fetching tasks for user:", username);
 	Promise.all([
-		taskService.getTasks,
-		scheduleService.getSchedule
+		taskService.getTasks(username),
+		scheduleService.getSchedule(username),
 	])
 	.then(([tasks, schedule]) => {
 		const taskList = tasks;
@@ -116,10 +118,18 @@ app.get("/tasks", authenticateUser, (req, res) => {
 
 		const schedule_list = schedule;
 		
-		const groupedTasks = groupTasksByDate(sortedTasks); //creates available hours
-
-		const finalizedSchedule = assembleSchedule(schedule_list, groupedTasks)
-
+		const groupedTasks = times.groupTasksByDate(sortedTasks); //creates available hours
+		const durationsResult = times.computeTotalDurations(groupedTasks);
+		const gapsResult = times.computeGaps(groupedTasks);
+		const finalizedSchedule = assembleSchedule(schedule_list, durationsResult, gapsResult)
+		finalizedSchedule.forEach(entry => {
+			const day = entry.day;
+			entry.scheduledTasks.forEach(task => {
+				const taskName = task.Task;
+				const time = task.Time;
+				addTask({time, taskName, day}, username);
+			})
+		});
 
 		res.send(finalizedSchedule);
 

@@ -607,6 +607,43 @@ function processData(data) {
 const final = processData(result);
 console.log(final);
 console.log(JSON.stringify(final, null, 2));*/
+
+class TaskI {
+    constructor(time, task, date, username) {
+        const currentYear = new Date().getFullYear();
+        this.time = time;
+        this.task = task;
+        this.date = date; // Format: "MM/DD/YYYY"
+        this.username = username     // Format: "MM/DD/YYYY"
+    }
+}
+console.log("Try programiz.pro");
+
+function groupTasksByDate(sortedTasks) {
+    const groupedTasks = {};
+
+    sortedTasks.forEach(task => {
+        const { date, time } = task;
+        console.log(date);
+        console.log(time);
+        
+        // If this date is not in the groupedTasks object, initialize it
+        if (!groupedTasks[date]) {
+            groupedTasks[date] = { date, times: [] };
+        }
+
+        // Append time to the corresponding date
+        groupedTasks[date].times.push(time);
+    });
+
+    return Object.entries(groupedTasks).map(([date, obj]) => ({
+        date,
+        //gaps: findGaps(times)  // Call findGaps on the list of times for each date
+        times: obj.times
+    }));
+}
+
+
 class Task {
     constructor(name, timeHours, startDate, dueDate) {
         const currentYear = new Date().getFullYear();
@@ -818,3 +855,31 @@ function processData(data) {
 
 const final = processData(result);
 console.log(JSON.stringify(final, null, 2));
+
+function computeDuration(range) {
+    const [start, end] = range.split('-').map(time => time.trim());
+    
+    const parseTime = (time) => {
+        let [hours, minutes] = time.split(':').map(Number);
+        return hours + (minutes / 60);
+    };
+    
+    return parseTime(end) - parseTime(start);
+}
+
+// Transform grouped tasks into total duration per date
+function computeTotalDurations(groupedTasks) {
+    return groupedTasks.map(({ date, times }) => ({
+        date,
+        totalDuration: times.reduce((sum, time) => sum + computeDuration(time), 0)
+    }));
+}
+
+function assembleSchedule(schedule, gaps, hours) {
+    const s = processTasks(schedule, hours);
+    const result = processData(s, gaps);
+    return result;
+}
+
+export default assembleSchedule;
+    
