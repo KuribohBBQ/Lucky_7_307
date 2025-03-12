@@ -989,9 +989,9 @@ function processTasks(taskList, availableWorkHours) {
 }
 
 
-// Process tasks
-let result = processTasks(tasks, availableWorkHours);
-console.log(JSON.stringify(result, null, 2));
+// Process tasks (commenting this out for now, this crashes backend since tasks undefined)
+/*/ let result = processTasks(tasks, availableWorkHours);
+console.log(JSON.stringify(result, null, 2)); /*/
 
 function scheduleTasks(tasks, availableTimes) {
     if (!availableTimes) return []; // Skip if no available times are provided
