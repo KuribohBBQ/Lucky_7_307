@@ -156,7 +156,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 
 	// auth stuff
 	function loginUser(creds) {
-		const promise = fetch(`http:taskmaker-cqf6b6ded0huddhe.westus3-01.azurewebsites.net/login`, {
+		const promise = fetch(`http://taskmaker-cqf6b6ded0huddhe.westus3-01.azurewebsites.net/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
