@@ -105,7 +105,7 @@ app.delete("/schedules/:id", authenticateUser, (req, res) => {
 
 //retrieve the entries for each day the user has already
 //on the schedule
-app.get("/tasks", authenticateUser, (req, res) => {
+app.post("/tasks/auto", authenticateUser, (req, res) => {
 	const username = req.username;
 	console.log("Fetching tasks for user:", username);
 	Promise.all([
@@ -113,7 +113,6 @@ app.get("/tasks", authenticateUser, (req, res) => {
 		scheduleService.getSchedule(username),
 	])
 	.then(([tasks, schedule]) => {
-		const taskList = tasks;
 		const sortedTasks = listSort(tasks);  
 
 		const schedule_list = schedule;
@@ -127,11 +126,11 @@ app.get("/tasks", authenticateUser, (req, res) => {
 			entry.scheduledTasks.forEach(task => {
 				const taskName = task.Task;
 				const time = task.Time;
-				addTask({time, taskName, day}, username);
+				taskService.addTask({time, taskName, day}, username);
 			})
 		});
 
-		res.send(finalizedSchedule);
+		res.send();
 
 		
 	})
