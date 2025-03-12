@@ -37,7 +37,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 	};
 
 	function postTask(task) {
-		const promise = fetch("Http://localhost:8000/tasks", {
+		const promise = fetch("Http://taskmaker-cqf6b6ded0huddhe.westus3-01.azurewebsites.net/tasks", {
 			method: "POST",
 			headers: addAuthHeader({
 				"Content-Type": "application/json"
@@ -50,7 +50,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 
 	function deleteTask(task) {
 		const promise = fetch(
-			"Http://localhost:8000/tasks/" + task._id,
+			"Http://taskmaker-cqf6b6ded0huddhe.westus3-01.azurewebsites.net/tasks/" + task._id,
 			{
 				method: "DELETE",
 				headers: addAuthHeader({
@@ -100,7 +100,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 	}
 
 	function fetchTasks() {
-		const promise = fetch("http://localhost:8000/tasks", {
+		const promise = fetch("http://taskmaker-cqf6b6ded0huddhe.westus3-01.azurewebsites.net/tasks", {
 			headers: addAuthHeader()
 		});
 
@@ -156,7 +156,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 
 	// auth stuff
 	function loginUser(creds) {
-		const promise = fetch(`http://localhost:8000/login`, {
+		const promise = fetch(`http:taskmaker-cqf6b6ded0huddhe.westus3-01.azurewebsites.net/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -188,7 +188,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 	}
 
 	function signupUser(creds) {
-		const promise = fetch(`http://localhost:8000/signup`, {
+		const promise = fetch(`http://taskmaker-cqf6b6ded0huddhe.westus3-01.azurewebsites.net/signup`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
