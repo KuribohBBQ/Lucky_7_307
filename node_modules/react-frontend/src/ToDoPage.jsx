@@ -100,7 +100,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 	}
 
 	function fetchTasks() {
-		const promise = fetch("http://taskmaker-cqf6b6ded0huddhe.westus3-01.azurewebsites.net/tasks", {
+		const promise = fetch("http://localhost:8000/tasks", {
 			headers: addAuthHeader()
 		});
 

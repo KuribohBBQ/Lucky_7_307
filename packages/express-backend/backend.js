@@ -27,9 +27,13 @@ app.get("/", (req, res) => {
 app.post("/signup", registerUser);
 app.post("/login", loginUser);
 
-app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+// 	console.log(`Example app listening at http://localhost:${port}`);
+// });
+//new app listen for azure
+app.listen(process.env.PORT || port, () => {
+	console.log("REST API is listening.");
+  });
 
 //app to list all tasks
 app.get("/tasks", authenticateUser, (req, res) => {
