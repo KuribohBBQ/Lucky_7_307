@@ -128,6 +128,12 @@ export function ScheduleForm(props) {
                 onClick={submitForm}
                 className="Submit"
             />
+            <input
+                type="button"
+                value="Automatically Import"
+                onClick={props.postTask}
+                className="Import"
+            />
         </form>
     );
 }

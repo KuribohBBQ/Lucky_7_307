@@ -113,7 +113,7 @@ app.post("/tasks/auto", authenticateUser, (req, res) => {
 		scheduleService.getSchedule(username),
 	])
 	.then(([tasks, schedule]) => {
-		const sortedTasks = listSort(tasks);  
+		const sortedTasks = listSort(tasks);
 
 		const schedule_list = schedule;
 		

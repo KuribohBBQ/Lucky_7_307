@@ -95,13 +95,12 @@ function TaskPage({ goToToDoPage, token  }) {
 		return promise;
 	}
 
-  function postTask(task) {
+  function postTask() {
 		const promise = fetch("Http://localhost:8000/tasks/auto", {
 			method: "POST",
 			headers: addAuthHeader({
 				"Content-Type": "application/json"
-			}),
-			body: JSON.stringify(task)
+			})
 		});
 
 		return promise;
@@ -156,7 +155,7 @@ function TaskPage({ goToToDoPage, token  }) {
 				scheduleData={schedule}
 				removeEntry={removeOneEntry}
 			/>
-			<ScheduleForm handleSubmit={updateSchedule} />
+			<ScheduleForm handleSubmit={updateSchedule} postTask={postTask}/>
 			<ul>
 				<li
 					onClick={goToToDoPage} // Navigate to task page
