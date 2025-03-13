@@ -20,30 +20,32 @@ export function registerUser(req, res) {
 	const { username, pwd } = req.body; // from form
 
 	if (!username || !pwd) {
-		res.status(400).send("Bad request: Invalid input data.");
-	} else if (
-		findUser(username).then((existingUser) => {
+		return res.status(400).send("Bad request: Invalid input data.");
+	}
+
+	findUser(username)
+		.then((existingUser) => {
+			console.log("this is existing user:", existingUser);
 			if (existingUser) {
-				true;
+				return res.status(409).send("Username already taken"); 
 			} else {
-				false;
+				return bcrypt 
+					.genSalt(10)
+					.then((salt) => bcrypt.hash(pwd, salt))
+					.then((hashedPassword) => {
+						return generateAccessToken(username) 
+							.then((token) => {
+								console.log("Token:", token);
+								res.status(201).send({ token: token });
+								postUser({ username, hashedPassword });
+							});
+					});
 			}
 		})
-	) {
-		res.status(409).send("Username already taken");
-	} else {
-		bcrypt
-			.genSalt(10)
-			.then((salt) => bcrypt.hash(pwd, salt))
-			.then((hashedPassword) => {
-				generateAccessToken(username).then((token) => {
-					console.log("Token:", token);
-					res.status(201).send({ token: token });
-					//creds.push({ username, hashedPassword });
-					postUser({ username, hashedPassword });
-				});
-			});
-	}
+		.catch((error) => { 
+			console.error("Error during registration:", error);
+			return res.status(500).send("Internal server error"); 
+		});
 }
 
 function generateAccessToken(username) {
