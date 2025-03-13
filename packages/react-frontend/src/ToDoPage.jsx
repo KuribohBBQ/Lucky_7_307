@@ -259,7 +259,14 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 								/>
 								<h1 style={{color: "white"}}>Daily Planner</h1>
 								<Table
-									characterData={tasksByDay}
+									characterData={[...tasksByDay].sort((a, b) => {
+										const getStartTimeInMinutes = (timeRange) => {
+											const startTime = timeRange.split("-")[0];
+											const [hours, minutes] = startTime.split(":").map(Number);
+											return hours * 60 + minutes;
+										};
+										return getStartTimeInMinutes(a.time) - getStartTimeInMinutes(b.time);
+									})}
 									removeCharacter={
 										removeOneCharacter
 									}
