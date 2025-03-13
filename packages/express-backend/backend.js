@@ -142,7 +142,7 @@ app.post("/tasks/auto", authenticateUser, (req, res) => {
 
 				console.log("day is:", dayStr);
 				console.log("task is: ", taskNameStr);
-				taskService.addTask({time, taskNameStr, dayStr}, username);
+				taskService.addTask({time: time, task: taskNameStr, date: dayStr}, username);
 			})
 		});
 
