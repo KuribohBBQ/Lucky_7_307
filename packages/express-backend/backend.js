@@ -115,18 +115,34 @@ app.post("/tasks/auto", authenticateUser, (req, res) => {
 	.then(([tasks, schedule]) => {
 		//const sortedTasks = listSort(tasks);  
         const sortedTasks = [...tasks].sort((a, b) => new Date(a.date) - new Date(b.date));
+		console.log("tasks are:", sortedTasks);
 		const schedule_list = schedule;
+		console.log("schedule is:", schedule_list);
 		
+		console.log("just about to call grouped tasks");
 		const groupedTasks = times.groupTasksByDate(sortedTasks); //creates available hours
-		const durationsResult = times.computeTotalDurations(groupedTasks);
+		console.log("groupedTasks are:", groupedTasks);
+		const durationsResult = times.computeGapDurations(groupedTasks);
+		console.log("durations results are:", durationsResult);
 		const gapsResult = times.computeGaps(groupedTasks);
-		const finalizedSchedule = assembleSchedule(schedule_list, durationsResult, gapsResult)
+		console.log("gap results are:", gapsResult);
+		const finalizedSchedule = assembleSchedule(schedule_list, gapsResult, durationsResult);
+		console.log("finalized schedule is:", finalizedSchedule);
+		console.log(JSON.stringify(finalizedSchedule, null, 2));
 		finalizedSchedule.forEach(entry => {
 			const day = entry.day;
+			const dayStr = String(day);
+			console.log("dayStr is:", dayStr);
 			entry.scheduledTasks.forEach(task => {
 				const taskName = task.Task;
+				const taskNameStr = String(taskName)
+				console.log("taskStr is: ", taskNameStr);
 				const time = task.Time;
-				taskService.addTask({time, taskName, day}, username);
+				console.log("time is: ", time);
+
+				console.log("day is:", dayStr);
+				console.log("task is: ", taskNameStr);
+				taskService.addTask({time, taskNameStr, dayStr}, username);
 			})
 		});
 

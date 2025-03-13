@@ -16,6 +16,10 @@ function addTask(task, username) {
 		date: "",
 		username: ""
 	};
+	console.log("task.time:", task.time);
+    console.log("task.task:", task.task);
+    console.log("task.date:", task.date);
+    console.log("username:", username);
 	newTask.time = task.time;
 	newTask.task = task.task;
 	newTask.date = task.date;

@@ -293,6 +293,41 @@ function computeTotalDurations(groupedTasks) {
     return result;
 }
 
+function computeGapDurations(groupedTasks) {
+    const result = {};
+
+    for (const [date, times] of Object.entries(groupedTasks)) {
+        // Parse the start and end times
+        const parsedTimes = times.map(range => range.split('-').map(time => time.trim()));
+
+        // Sort time intervals by start time
+        parsedTimes.sort((a, b) => {
+            const parseTime = time => {
+                let [hours, minutes] = time.split(':').map(Number);
+                return hours + (minutes / 60);
+            };
+            return parseTime(a[0]) - parseTime(b[0]);
+        });
+
+        let totalGap = 0;
+
+        const parseTime = time => {
+            let [hours, minutes] = time.split(':').map(Number);
+            return hours + (minutes / 60);
+        };
+
+        for (let i = 1; i < parsedTimes.length; i++) {
+            let previousEnd = parseTime(parsedTimes[i - 1][1]); // End of previous interval
+            let currentStart = parseTime(parsedTimes[i][0]); // Start of current interval
+            totalGap += currentStart - previousEnd; // Compute the gap
+        }
+
+        result[date] = totalGap;
+    }
+
+    return result;
+}
+
 function findGaps(ranges) {
     const parseTime = (time) => {
         let [hours, minutes] = time.split(':').map(Number);
@@ -324,6 +359,7 @@ function findGaps(ranges) {
     return gapRanges;
 }
 
+
 function computeGaps(groupedTasks) {
     const result = {};
 
@@ -334,10 +370,12 @@ function computeGaps(groupedTasks) {
     return result;
 }
 
+
 export default {
     groupTasksByDate,
     computeDuration,
     computeTotalDurations,
+    computeGapDurations,
     findGaps,
     computeGaps
 };

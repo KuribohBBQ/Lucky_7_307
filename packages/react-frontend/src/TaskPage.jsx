@@ -96,7 +96,7 @@ function TaskPage({ goToToDoPage, token  }) {
 	}
 
   function postTask() {
-		const promise = fetch("Http://localhost:8000/tasks/auto", {
+		const promise = fetch("http://localhost:8000/tasks/auto", {
 			method: "POST",
 			headers: addAuthHeader({
 				"Content-Type": "application/json"
@@ -107,7 +107,7 @@ function TaskPage({ goToToDoPage, token  }) {
 	}
 
   function postScheduleEvent(schedule) {
-		const promise = fetch("Http://localhost:8000/schedules", {
+		const promise = fetch("http://localhost:8000/schedules", {
 			method: "POST",
 			headers: addAuthHeader({
 				"Content-Type": "application/json"
