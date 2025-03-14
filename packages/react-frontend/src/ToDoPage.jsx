@@ -37,7 +37,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 	};
 
 	function postTask(task) {
-		const promise = fetch("Http://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/tasks", {
+		const promise = fetch("https://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/tasks", {
 			method: "POST",
 			headers: addAuthHeader({
 				"Content-Type": "application/json"
@@ -50,7 +50,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 
 	function deleteTask(task) {
 		const promise = fetch(
-			"Http://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/tasks/" + task._id,
+			"https://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/tasks/" + task._id,
 			{
 				method: "DELETE",
 				headers: addAuthHeader({
@@ -100,7 +100,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 	}
 
 	function fetchTasks() {
-		const promise = fetch("http://http://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/tasks", {
+		const promise = fetch("https://http://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/tasks", {
 			headers: addAuthHeader()
 		});
 
