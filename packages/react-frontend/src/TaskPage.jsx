@@ -71,7 +71,7 @@ function TaskPage({ goToToDoPage, token  }) {
 // ask about which one to use. 
   function deleteSchedule(scheduleToDelete) {
 		const promise = fetch(
-			"Http://localhost:8000/schedules/" + scheduleToDelete._id,
+			"https://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/schedules/" + scheduleToDelete._id,
 			{
 				method: "DELETE",
 				headers: addAuthHeader({
@@ -88,7 +88,7 @@ function TaskPage({ goToToDoPage, token  }) {
   
   //supposed to handle the fetch part of the code
 	function fetchSchedule() {
-		const promise = fetch("http://localhost:8000/schedules", {
+		const promise = fetch("https://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/schedules", {
 			headers: addAuthHeader()
 		});
 
@@ -96,7 +96,7 @@ function TaskPage({ goToToDoPage, token  }) {
 	}
 
   function postTask() {
-		const promise = fetch("http://localhost:8000/tasks/auto", {
+		const promise = fetch("https://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/tasks/auto", {
 			method: "POST",
 			headers: addAuthHeader({
 				"Content-Type": "application/json"
@@ -107,7 +107,7 @@ function TaskPage({ goToToDoPage, token  }) {
 	}
 
   function postScheduleEvent(schedule) {
-		const promise = fetch("http://localhost:8000/schedules", {
+		const promise = fetch("https://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/schedules", {
 			method: "POST",
 			headers: addAuthHeader({
 				"Content-Type": "application/json"
