@@ -13,10 +13,8 @@
 	"author": "",
 	"license": "ISC",
 	"description": "",
-	"workspaces": [
-		"packages/express-backend",
-		"packages/react-frontend"
-	],
+	"workspaces": ["packages/*"],
+	
 	"devDependencies": {
 		"prettier": "^3.5.1"
 	},
