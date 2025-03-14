@@ -2,7 +2,7 @@
 
 -This is Group 7's Team project, we are building a todo list for everyday activities, as well as tracking certain tasks
 
--We have an algorithm where you can input certain tasks, the time it takes to complete them, and when they are due, and the algorithm creates a schedule for which you can work with
+-Our Todo Page allows you to input tasks on the date and time of which they will be completed. You can add and delete these tasks, as well, we have an algorithm where you can input certain tasks, the time it takes to complete them, and when they are due, and the algorithm creates a schedule for which you can work with
 
 -You can login if you already have an account
 
