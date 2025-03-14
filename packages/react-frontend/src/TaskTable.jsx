@@ -3,20 +3,20 @@ function TableHeader() {
 	return (
 		<thead>
 			<tr>
-				<th>Task</th>
-				<th>Time-to-Complete</th>
-				<th>Start</th>
-				<th>Due</th>
+				<th style={{ color: "white" }}>Task</th>
+				<th style={{ color: "white" }}>Time-to-Complete</th>
+				<th style={{ color: "white" }}>Start</th>
+				<th style={{ color: "white" }}>Due</th>
 			</tr>
 		</thead>
 	);
 }
 
 function TableBody(props) {
-	if (props.characterData === null) {
+	if (props.scheduleData === null) {
 		return <caption>Data Unavailable</caption>;
 	}
-	const rows = props.characterData.map((row, index) => {
+	const rows = props.scheduleData.map((row, index) => {
 		return (
 			<tr key={index}>
 				<td>{row.task}</td>
@@ -25,7 +25,7 @@ function TableBody(props) {
 				<td>{row.due}</td>
 				<td>
 					<button
-						onClick={() => props.removeCharacter(index)}
+						onClick={() => props.removeEntry(index)}
 					>
 						Delete
 					</button>
@@ -41,8 +41,8 @@ function TaskTable(props) {
 		<table>
 			<TableHeader />
 			<TableBody
-				characterData={props.characterData}
-				removeCharacter={props.removeCharacter}
+				scheduleData={props.scheduleData}
+				removeEntry={props.removeEntry}
 			/>
 		</table>
 	);

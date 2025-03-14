@@ -1,0 +1,57 @@
+.fancy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.fancy-table th, .fancy-table td {
+    padding: 8px;
+    text-align: center;
+}
+
+.fancy-table th {
+    color: white;
+    background-color: transparent; /* Make the header background transparent */
+}
+
+.fancy-table tbody tr {
+    background-color: #A0A0A0;
+    color: black;
+    cursor: pointer; /* Make rows clickable */
+}
+
+.fancy-table tbody tr:hover {
+    background-color: #E6E6FA;
+}
+
+.fancy-table tbody tr.selected {
+    background-color: #E6E6FA; 
+}
+
+.fancy-table tbody .no-plan {
+    background-color: transparent;
+    cursor: default; 
+    border: 2px dashed #A0A0A0; 
+    font-style: italic; 
+    padding: 20px; 
+    text-align: center; 
+    color: white; 
+}
+
+.fancy-table tbody .no-plan:hover {
+    background-color: transparent;
+
+}
+.delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
+}

@@ -5,28 +5,27 @@ import ToDoPage from "./ToDoPage";
 import TaskPage from "./TaskPage";
 
 function MyApp() {
-	// return <ToDoPage />;
-	const [showToDoPage, setShowToDoPage] = useState(false); // State to toggle between pages
+    const [showPage, setShowPage] = useState("ToDoPage"); // State to toggle between pages
 
-	// Function to navigate to ToDoPage
-	const goToToDoPage = () => {
-		setShowToDoPage(true);
-	};
+    // Function to navigate to ToDoPage
+    const goToToDoPage = () => {
+        setShowPage("ToDoPage");
+    };
 
-	// Function to navigate back to HomePage
-	const goToTaskPage = () => {
-		setShowToDoPage(true);
-	};
+    // Function to navigate to TaskPage
+    const goToTaskPage = () => {
+        setShowPage("TaskPage");
+    };
 
-	return (
-		<>
-			{showToDoPage ? (
-				<TaskPage goToToDoPage={goToToDoPage} />
-			) : (
-				<ToDoPage goToTaskPage={goToTaskPage} />
-			)}
-		</>
-	);
+    return (
+        <>
+            {showPage === "TaskPage" ? (
+                <TaskPage goToToDoPage={goToToDoPage} />
+            ) : (
+                <ToDoPage goToTaskPage={goToTaskPage} />
+            )}
+        </>
+    );
 }
 
 export default MyApp;
