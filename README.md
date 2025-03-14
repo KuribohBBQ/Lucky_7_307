@@ -11,3 +11,5 @@
 -UI Prototype: https://www.figma.com/proto/OroKTaR15fIGBJtxh3ZRMv/CSC-430-team-protype-(Jackson-Nelson)?node-id=18-3&starting-point-node-id=18%3A3&t=FvptMuhVwJV0KbpG-1
 
 -Development Enviornment Setup:
+
+-Docs: https://github.com/KuribohBBQ/Lucky_7_307/tree/main/docs
