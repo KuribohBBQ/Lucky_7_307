@@ -14,7 +14,8 @@
 	"license": "ISC",
 	"description": "",
 	"workspaces": [
-		"packages/*"
+		"packages/express-backend",
+		"packages/react-frontend"
 	],
 	"devDependencies": {
 		"prettier": "^3.5.1"
