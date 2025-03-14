@@ -2,17 +2,34 @@ name: CI Testing
 
 on:
   push:
-    branches: [CI/CD_PR]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm run -w express-backend lint
-      - run: npm run -w react-frontend lint
-      - run: npm run -w react-frontend build
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Grant Execution Permission to Vite
+        run: chmod +x node_modules/.bin/vite || true
+
+      - name: Lint Express Backend
+        run: npm run -w express-backend lint
+
+      - name: Lint React Frontend
+        run: npm run -w react-frontend lint
+
+      - name: Build React Frontend
+        run: |
+          cd packages/react-frontend
+          npm install
+          npx vite build
