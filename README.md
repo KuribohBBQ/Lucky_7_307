@@ -10,6 +10,6 @@
 
 -UI Prototype: https://www.figma.com/proto/OroKTaR15fIGBJtxh3ZRMv/CSC-430-team-protype-(Jackson-Nelson)?node-id=18-3&starting-point-node-id=18%3A3&t=FvptMuhVwJV0KbpG-1
 
--Development Enviornment Setup: In order to follow our development enviornment setup, one must use tabs for indentation with a width of 4 spaces, and always include semicolons. Wrap lines at 70 characters, use double quotes, avoid trailing commas, add spaces inside brackets, and always include parentheses around arrow function parameters.
+-Development Enviornment Setup: In order to follow our development enviornment setup, one must first install npm, then ESLint and prettier and use the same specifications as in the ESLint file, and if they want to test the code, they must install cypress
 
 -Docs: https://github.com/KuribohBBQ/Lucky_7_307/tree/main/docs
