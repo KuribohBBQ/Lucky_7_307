@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import TaskTable from "./TaskTable";
 import Form from "./Form";
 
-function TaskPage({ goToToDoPage }) {
+function TaskPage({ goToToDoPage, token  }) {
+	// this is the token that we use to authenticate. Use to access mongo.
+	console.log("this is the token:", token);
+
 	const [characters, setCharacters] = useState([]);
 	function removeOneCharacter(index) {
 		const updated = characters.filter((character, i) => {

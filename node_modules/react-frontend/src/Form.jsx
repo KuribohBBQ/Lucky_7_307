@@ -15,14 +15,14 @@ function Form(props) {
         else setPerson({ time: value, task: person["task"] });
     }
 
-    function submitForm() {
-        const taskWithDate = {
-            ...person,
-            date: props.date.toDateString()
-        };
-        props.handleSubmit(taskWithDate);
-        setPerson({ time: "", task: "", date: "" });
-    }
+	function submitForm() {
+		const taskWithDate = {
+			...person,
+			date: props.date
+		};
+		props.handleSubmit(taskWithDate);
+		setPerson({ time: "", task: "", date: "" });
+	}
 
     return (
         <form className="fancy-form">

@@ -13,6 +13,7 @@
 		"packages/*"
 	],
 	"devDependencies": {
+		"cypress": "^14.1.0",
 		"prettier": "^3.5.1"
 	},
 	"dependencies": {

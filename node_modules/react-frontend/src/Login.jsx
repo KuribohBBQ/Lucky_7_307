@@ -34,6 +34,17 @@ function Login(props) {
 				value={props.buttonLabel || "Log In"}
 				onClick={submitForm}
 			/>
+			<input
+				type="button"
+				value={props.buttonLabel2 || "Sign Up"}
+				onClick={() => {
+					if (props.buttonLabel2) {
+						navigate("/login");
+					} else {
+						navigate("/signup");
+					}
+				}}
+			/>
 		</form>
 	);
 
