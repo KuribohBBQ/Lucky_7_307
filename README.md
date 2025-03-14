@@ -7,3 +7,7 @@
 -You can login if you already have an account
 
 -Testing is in packages/express-backend/cypress/e2e/Sprint3Tests.js
+
+-UI Prototype: https://www.figma.com/proto/OroKTaR15fIGBJtxh3ZRMv/CSC-430-team-protype-(Jackson-Nelson)?node-id=18-3&starting-point-node-id=18%3A3&t=FvptMuhVwJV0KbpG-1
+
+-Development Enviornment Setup:
