@@ -176,7 +176,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 						`Login Error ${response.status}: ${response.data}`
 					);
 					setIsLoggedIn(false);
-					throw error;
+					throw "error";
 				}
 			})
 			.catch((error) => {
