@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import Login from "./Login.jsx";
 
-function ToDoPage({ goToTaskPage }) {
+function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 	const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString());
 
 	const [tasksByDay, setTasksByDay] = useState([]);
@@ -18,7 +18,24 @@ function ToDoPage({ goToTaskPage }) {
 	const INVALID_TOKEN = "INVALID_TOKEN";
 	const [token, setToken] = useState(INVALID_TOKEN);
 	const [message, setMessage] = useState("");
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	// loginState is passed in from myApp when we're coming from taskPage
+	const [isLoggedIn, setIsLoggedIn] = useState(loginState); 
+
+	const formatCurrentMonth = (date) => {
+		const dateParts = date.split('/');
+		if (dateParts.length !== 3) {
+		  return "Invalid date format";
+		}
+	  
+		// Note the change in index order for day and month for DD/MM/YYYY
+		const day = parseInt(dateParts[1], 10);
+		const month = parseInt(dateParts[0], 10) - 1; // Month is now at index 1
+		const year = parseInt(dateParts[2], 10);
+	  
+		const dateObject = new Date(year, month, day);
+		const longMonth = dateObject.toLocaleDateString(undefined, { month: 'long' });
+		return longMonth;
+	};
 
 	function postTask(task) {
 		const promise = fetch("Http://localhost:8000/tasks", {
@@ -114,7 +131,12 @@ function ToDoPage({ goToTaskPage }) {
 	};
 
 	useEffect(() => {
-		console.log("useEffect is running. Current token:", token);
+		console.log("useEffect is running. savedToken:", savedToken, "Current token:", token);
+		console.log("loginstate: ", loginState);
+		if (savedToken !== null) {
+			console.log("inside the if statement!");
+			setToken(savedToken);
+		} 
 		fetchTasks()
 			.then((res) =>
 				res.status === 200 ? res.json() : undefined
@@ -230,43 +252,43 @@ function ToDoPage({ goToTaskPage }) {
 					element={
 						isLoggedIn ? (
 							<div className="container">
+								<h1 style={{ textAlign: "center", marginTop: "10rem", color: "white" }}>
+									{formatCurrentMonth(selectedDate)}
+								</h1>
 								<HorizontalCalendar
 									onDateSelect={handleDateSelection}
 								/>
-								<h1>Todo List</h1>
+								<h1 style={{color: "white"}}>Daily Planner</h1>
 								<Table
 									characterData={tasksByDay}
 									removeCharacter={
 										removeOneCharacter
 									}
+									style={{ marginBottom: "20px" }}
 								/>
 								<Form
 									handleSubmit={updateTasks}
 									date={selectedDate}
 								/>
 								<ul>
-									<li>
-										<img
-											class="icon"
-											src="src/assets/home.svg"
-											alt="Home"
-										></img>
-									</li>
 									<li
-										onClick={goToTaskPage} // Navigate to task page
+										onClick={() => goToTaskPage(token)} // Navigate to task page
 										style={{
 											cursor: "pointer",
 											display: "flex",
 											alignItems: "center",
 											justifyContent: "center",
-											width: "40px",
-											height: "40px",
+											width: "50px",
+											height: "50px",
 											borderRadius: "50%",
-											backgroundColor: "#f0f0f0"
+											background: "#9979b8",
+											position: "fixed", 
+        									bottom: "20px", 
+        									right: "20px",
 										}}
 									>
 										<img
-											className="icon"
+											className="Tableicon"
 											src="src/assets/table.svg"
 											alt="Table"
 										></img>

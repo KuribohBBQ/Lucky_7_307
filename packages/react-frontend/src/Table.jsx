@@ -1,50 +1,72 @@
-// src/Table.jsx
-import React from "react";
+import React, { useState } from "react";
+import './Table.css';
+
 function TableHeader() {
-	return (
-		<thead>
-			<tr>
-				<th>Time</th>
-				<th>Task</th>
-			</tr>
-		</thead>
-	);
+    return (
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Task</th>
+            </tr>
+        </thead>
+    );
 }
 
 function TableBody(props) {
-	console.log("characterData:", props.characterData);
+    const [selectedRow, setSelectedRow] = useState(null);
 
-	if (props.characterData === null) {
-		return <caption>Data Unavailable</caption>;
-	}
-	const rows = props.characterData.map((row, index) => {
-		return (
-			<tr key={index}>
-				<td>{row.time}</td>
-				<td>{row.task}</td>
-				<td>
-					<button
-						onClick={() => props.removeCharacter(index)}
-					>
-						Delete
-					</button>
-				</td>
-			</tr>
-		);
-	});
-	return <tbody>{rows}</tbody>;
+    console.log("characterData:", props.characterData);
+
+    if (props.characterData === null || props.characterData.length === 0) {
+        return (
+            <tbody>
+                <tr className="no-plan">
+                    <td colSpan="3">Nothing planned today</td>
+                </tr>
+            </tbody>
+        );
+    }
+
+    const rows = props.characterData.map((row, index) => {
+        return (
+            <tr
+                key={index}
+                onClick={() => setSelectedRow(index)}
+                className={selectedRow === index ? "selected" : ""}
+            >
+                <td>{row.time}</td>
+                <td>{row.task}</td>
+                <td>
+                    {selectedRow === index && (
+                        <button
+                            className="delete-button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                props.removeCharacter(index);
+                                setSelectedRow(null);
+                            }}
+                        >
+                            Remove
+                        </button>
+                    )}
+                </td>
+            </tr>
+        );
+    });
+
+    return <tbody>{rows}</tbody>;
 }
 
 function Table(props) {
-	return (
-		<table>
-			<TableHeader />
-			<TableBody
-				characterData={props.characterData}
-				removeCharacter={props.removeCharacter}
-			/>
-		</table>
-	);
+    return (
+        <table className="fancy-table">
+            <TableHeader />
+            <TableBody
+                characterData={props.characterData}
+                removeCharacter={props.removeCharacter}
+            />
+        </table>
+    );
 }
 
 export default Table;
