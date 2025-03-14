@@ -188,7 +188,7 @@ function ToDoPage({ goToTaskPage, savedToken, loginState }) {
 	}
 
 	function signupUser(creds) {
-		const promise = fetch(`http://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/signup`, {
+		const promise = fetch(`https://taskmaker3-dmakc2gpfracapfr.westus3-01.azurewebsites.net/signup`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
