@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  dist:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,4 +15,4 @@ jobs:
       - run: npm ci
       - run: npm run -w express-backend lint
       - run: npm run -w react-frontend lint
-      - run: npm run -w react-frontend build
+      - run: npm run -w react-frontend dist
