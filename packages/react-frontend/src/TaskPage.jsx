@@ -169,6 +169,9 @@ function TaskPage({ goToToDoPage, token  }) {
 						borderRadius: "60%",
 						background: "#9979b8",
 						border: "2px solid #000000",
+						position: "relative", 
+						top: "20px", 
+						right: "40px",
 					}}>
 					<img className="icon" 
 					src="src/assets/home.svg"
